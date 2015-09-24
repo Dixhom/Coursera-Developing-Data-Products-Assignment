@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survival rate in Titanic</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Survival rate in Titanic">
+  <meta name="author" content="Sho Kubori">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Survival rate in Titanic</h1>
+    <h2>Coursera &quot;Developing Data Product&quot; Assignment</h2>
+    <p>Sho Kubori<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="./assets/img/titanic.jpg" alt="height"></p>
+
+<ul>
+<li>Titanic is perhaps the most famous ship in the world for its tragic accident. </li>
+<li>One can easily imagene the priority of saving lives of children and women was higher than that of adults and men. But is that really true?</li>
+<li>To verify that, survival rate of each group was visualized to check the effect of parameters such as their gender, the class of their rooms and age.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>How the app looks</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="./assets/img/app.png" alt="height"></p>
+
+<ul>
+<li>Side panel
+
+<ul>
+<li>Brief documentation</li>
+<li>Choose variables for x and y axis here.</li>
+</ul></li>
+<li>Main panel
+
+<ul>
+<li>Visualized survival rate (or number of survivers or casualties) is shown here.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Titanic raw data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">str(Titanic)
+</code></pre>
+
+<pre><code>##  table [1:4, 1:2, 1:2, 1:2] 0 0 35 0 0 0 17 0 118 154 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 4
+##   ..$ Class   : chr [1:4] &quot;1st&quot; &quot;2nd&quot; &quot;3rd&quot; &quot;Crew&quot;
+##   ..$ Sex     : chr [1:2] &quot;Male&quot; &quot;Female&quot;
+##   ..$ Age     : chr [1:2] &quot;Child&quot; &quot;Adult&quot;
+##   ..$ Survived: chr [1:2] &quot;No&quot; &quot;Yes&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Pre-processing data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Data (4-dimensional array) was &quot;molten&quot; for creating graph.</p>
+
+<pre><code class="r">library(reshape2)
+t &lt;- melt(Titanic)
+t &lt;- dcast(t, Class + Sex + Age ~ Survived)
+t &lt;- transform(t, total = No + Yes) 
+t &lt;- transform(t, rate = Yes / total)
+head(t)
+</code></pre>
+
+<pre><code>##   Class    Sex   Age  No Yes total       rate
+## 1   1st   Male Child   0   5     5 1.00000000
+## 2   1st   Male Adult 118  57   175 0.32571429
+## 3   1st Female Child   0   1     1 1.00000000
+## 4   1st Female Adult   4 140   144 0.97222222
+## 5   2nd   Male Child   0  11    11 1.00000000
+## 6   2nd   Male Adult 154  14   168 0.08333333
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='How the app looks'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Titanic raw data'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Pre-processing data'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
